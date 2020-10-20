@@ -17,7 +17,7 @@ int main()
     char* filename="fertility_Diagnosis_Data_Group1_4.txt";
     read_txt(filename, c, txt_array);
     read_attr(txt_array, season, age, alcFreq, sitHour, disease, acci, surgInt, fever, smoke, semenDiag);
-
+    read_floatArray(season); //test
     return 0;
 }
 
