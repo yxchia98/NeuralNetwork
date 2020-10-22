@@ -18,6 +18,8 @@ int main()
     return 0;
 }
 
+
+//Reads from the .txt dataset file and assigns values in it into the corresponding attribute arrays
 void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LINE_SIZE], float season[], float age[], float alcFreq[], float sitHour[], int disease[], int acci[], int surgInt[], int fever[], int smoke[], int semenDiag[])
 {
     int i=0,k;
