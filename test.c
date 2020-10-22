@@ -10,14 +10,13 @@ void read_floatArray(float array[]);
 void read_intArray(float array[]);
 int main()
 {
-    float season[SIZE], age[SIZE], alcFreq[SIZE], sitHour[SIZE];    // arrays for attributes with float data types
-    int disease[SIZE], acci[SIZE], surgInt[SIZE], fever[SIZE], smoke[SIZE], semenDiag[SIZE]; // arrays for attributes with int data types
+    static float season[SIZE], age[SIZE]={}, alcFreq[SIZE], sitHour[SIZE];    // arrays for attributes with float data types
+    static int disease[SIZE], acci[SIZE], surgInt[SIZE], fever[SIZE], smoke[SIZE], semenDiag[SIZE]; // arrays for attributes with int data types
     char c[TXT_LINE_SIZE];
     char txt_array[100][TXT_LINE_SIZE];
     char* filename="fertility_Diagnosis_Data_Group1_4.txt";
     read_txt(filename, c, txt_array);
     read_attr(txt_array, season, age, alcFreq, sitHour, disease, acci, surgInt, fever, smoke, semenDiag);
-    read_floatArray(age); //test
     return 0;
 }
 
