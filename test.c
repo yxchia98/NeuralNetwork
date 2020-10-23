@@ -4,12 +4,12 @@
 #include <string.h>
 #define TXT_LINE_SIZE 41                    //maximum number of chars in per line in .txt file
 #define SIZE 100                            //size of dataset
-void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LINE_SIZE], float season[], float age[], float alcFreq[], float sitHour[], int disease[], int acci[], int surgInt[], int fever[], int smoke[], int semenDiag[]);
+void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LINE_SIZE], double season[], double age[], double alcFreq[], double sitHour[], int disease[], int acci[], int surgInt[], int fever[], int smoke[], int semenDiag[]);
 void read_floatArray(float array[]);
 void read_intArray(float array[]);
 int main()
 {
-    static float season[SIZE], age[SIZE], alcFreq[SIZE], sitHour[SIZE];    // arrays for attributes with float data types
+    static double season[SIZE], age[SIZE], alcFreq[SIZE], sitHour[SIZE];    // arrays for attributes with float data types
     static int disease[SIZE], acci[SIZE], surgInt[SIZE], fever[SIZE], smoke[SIZE], semenDiag[SIZE]; // arrays for attributes with int data types
     char c[TXT_LINE_SIZE];
     char txt_array[SIZE][TXT_LINE_SIZE]={};
@@ -20,7 +20,7 @@ int main()
 
 
 //Reads from the .txt dataset file and assigns values in it into the corresponding attribute arrays
-void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LINE_SIZE], float season[], float age[], float alcFreq[], float sitHour[], int disease[], int acci[], int surgInt[], int fever[], int smoke[], int semenDiag[])
+void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LINE_SIZE], double season[], double age[], double alcFreq[], double sitHour[], int disease[], int acci[], int surgInt[], int fever[], int smoke[], int semenDiag[])
 {
     int i=0,k;
     FILE *fp;                               //file pointer
