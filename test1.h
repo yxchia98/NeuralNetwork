@@ -69,6 +69,13 @@ void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LI
 
 }
 
+double randfrom(double min, double max) 
+{
+    double range = (max - min); 
+    double div = RAND_MAX / range;
+    return min + (rand() / div);
+}
+
 void read_floatArray(float array[])
 {
     int i=0;
