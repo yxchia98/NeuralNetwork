@@ -5,19 +5,32 @@
 #include "test1.h"
 #define TXT_LINE_SIZE 41                    //maximum number of chars in per line in .txt file
 #define SIZE 100                            //size of dataset
-//training set range 0-89
-//test set range 90-99
+
+/**********************************************************************************************
+Basic elements inside Input arrays(trainingInput/testingInput)          Datatype(range)
+[0]=Season of analysis                                                  Double(-1,-0.33,0.33,1)
+[1]=Age of analysis                                                     Double(0-1)
+[2]=Childish disease                                                    Int(0,1)
+[3]=Accident or serious trauma                                          Int(0,1)
+[4]=Surgical intervention                                               Int(0,1)
+[5]=High fevers last year                                               Int(-1,0,1)
+[6]=Frequency of alcohol consumption                                    Double(0.2,0.4,0.6,0.8,1)
+[7]=Smoking habit                                                       Int(-1,0,1)
+[8]=Number of hours spent sitting per day                               Double(0-1)
+--------------------------------------------------------------------------------------------------
+Basic elements inside Output arrays(trainingOutput/testingOutput)       Datatype(range)
+[0]=Semen Diagnosis                                                     Int(0,1)
+***********************************************************************************************/
 
 int main()
 {
-    static double season[SIZE], age[SIZE], alcFreq[SIZE], sitHour[SIZE], weight[9];    // arrays for attributes with float data types
-    static int disease[SIZE], acci[SIZE], surgInt[SIZE], fever[SIZE], smoke[SIZE], semenDiag[SIZE]; // arrays for attributes with int data types
+    static double weight[9], trainingInput[90][9], trainingOutput[90][1], testingInput[10][9], testingOutput[10][1];
     char c[TXT_LINE_SIZE];
     char txt_array[SIZE][TXT_LINE_SIZE]={};
     char* filename="fertility_Diagnosis_Data_Group1_4.txt";
     double error, mae;
     printf("Size of array in bytes:%d",sizeof(weight));
-    read_txt(filename, c, txt_array, season, age, alcFreq, sitHour, disease, acci, surgInt, fever, smoke, semenDiag);               // reads txt file and assigns it into txt_array
+    read_txt(filename, c, txt_array, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
     randWeight(weight,9);
     return 0;
 }
