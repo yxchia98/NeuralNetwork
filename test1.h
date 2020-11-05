@@ -10,6 +10,7 @@ void randWeight(double x[], int n);
 double randFrom(double min, double max);
 void read_floatArray(float array[]);
 void read_intArray(float array[]);
+double sigmoid(double x);
 
 //Reads from the .txt dataset file and assigns values in it into the corresponding attribute arrays
 void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LINE_SIZE], double season[], double age[], double alcFreq[], double sitHour[], int disease[], int acci[], int surgInt[], int fever[], int smoke[], int semenDiag[])
@@ -78,6 +79,13 @@ void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LI
 void train(double season[], double age[], double alcFreq[], double sitHour[], int disease[], int acci[], int surgInt[], int fever[], int smoke[], int semenDiag[], double weight[])
 {
 
+}
+
+double sigmoid(double x)
+{
+    double result;
+    result=1/(1+exp(-x));
+    return result;
 }
 
 void randWeight(double x[],int n)
