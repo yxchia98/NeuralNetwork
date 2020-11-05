@@ -5,6 +5,8 @@
 #include "test1.h"
 #define TXT_LINE_SIZE 41                    //maximum number of chars in per line in .txt file
 #define SIZE 100                            //size of dataset
+#define TRAINSIZE 90
+#define TESTSIZE  10
 
 /**********************************************************************************************
 Basic elements inside Input arrays(trainingInput/testingInput)          Datatype(range)
@@ -24,7 +26,7 @@ Basic elements inside Output arrays(trainingOutput/testingOutput)       Datatype
 
 int main()
 {
-    static double weight[9], trainingInput[90][9], trainingOutput[90][1], testingInput[10][9], testingOutput[10][1];
+    static double weight[9], trainingInput[TRAINSIZE][9], trainingOutput[TRAINSIZE][1], testingInput[TESTSIZE][9], testingOutput[TESTSIZE][1];
     char c[TXT_LINE_SIZE];
     char txt_array[SIZE][TXT_LINE_SIZE]={};
     char* filename="fertility_Diagnosis_Data_Group1_4.txt";
