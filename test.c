@@ -30,9 +30,11 @@ int main()
     char c[TXT_LINE_SIZE];
     char txt_array[SIZE][TXT_LINE_SIZE]={};
     char* filename="fertility_Diagnosis_Data_Group1_4.txt";
-    double error, mae;
+    double bias, error, mae;
     read_txt(filename, c, txt_array, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
     randWeight(weight,9);
+    bias=randFrom(-1,1);
+    
     return 0;
 }
 

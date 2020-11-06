@@ -139,7 +139,6 @@ double sigmoid(double x)
 void randWeight(double x[],int n)
 {
     int i;
-    printf("Size of array in bytes:%d",sizeof(x));
     for(i=0;i<n;i++)
     {
         x[i]=randFrom(-1.0,1.0);
