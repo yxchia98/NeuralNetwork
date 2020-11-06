@@ -11,5 +11,5 @@ return abs(predictedOutput - testingOutput); // absolute value, no negative
 
 double m_m_s_e(double predictedOutput, double testingOutput)
 {
-return (predictedOutput-testingOutput)*(predictedOutput-testingOutput);
+return pow((predictedOutput-testingOutput),2);
 }
