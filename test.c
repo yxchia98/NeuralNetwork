@@ -34,12 +34,8 @@ int main()
     double bias, error, mae;
     read_txt(filename, c, txt_array, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
     randWeight(weight,9);
-<<<<<<< HEAD
     bias=randFrom(-1,1);
-    
-=======
     linear_regression(trainingInput[1], weight, 1);
->>>>>>> e58627b8e883d912faa0f49449fa9d283714da41
     return 0;
 }
 
