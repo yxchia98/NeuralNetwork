@@ -28,7 +28,7 @@ Basic elements inside Output arrays(trainingOutput/testingOutput)       Datatype
 
 int main()
 {
-    static double weight[9], trainingInput[TRAINSIZE][9], trainingOutput[TRAINSIZE][1], testingInput[TESTSIZE][9], testingOutput[TESTSIZE][1];
+    static double weight[9], trainingInput[TRAINSIZE][9], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][9], testingOutput[TESTSIZE];
     char c[TXT_LINE_SIZE];
     char txt_array[SIZE][TXT_LINE_SIZE]={};
     char* filename="fertility_Diagnosis_Data_Group1_4.txt";
