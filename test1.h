@@ -18,7 +18,7 @@ double sigmoid(double x);
 //Reads from the .txt dataset file and assigns values in it into the corresponding attribute arrays
 void read_txt(char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE])
 {
-    int i = 0, k = 0;
+    int i = 0, j = 0, k;
     FILE *fp; //file pointer
     char *ptr;
     char delim[] = ",";
@@ -35,11 +35,40 @@ void read_txt(char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINS
             ptr = strtok(c, delim);
             while (ptr != NULL)
             {
-                for (int j = 0; j < 9; j++)
+                switch (k)
                 {
-                    trainingInput[i][j] = atof(ptr);
+                case 0:
+                    trainingInput[i][0] = atof(ptr);
+                    break;
+                case 1:
+                    trainingInput[i][1] = atof(ptr);
+                    break;
+                case 2:
+                    trainingInput[i][2] = atoi(ptr);
+                    break;
+                case 3:
+                    trainingInput[i][3] = atoi(ptr);
+                    break;
+                case 4:
+                    trainingInput[i][4] = atoi(ptr);
+                    break;
+                case 5:
+                    trainingInput[i][5] = atoi(ptr);
+                    break;
+                case 6:
+                    trainingInput[i][6] = atof(ptr);
+                    break;
+                case 7:
+                    trainingInput[i][7] = atoi(ptr);
+                    break;
+                case 8:
+                    trainingInput[i][8] = atof(ptr);
+                    break;
+                case 9:
+                    trainingOutput[i] = atoi(ptr);
+                    break;
                 }
-                trainingOutput[i] = atof(ptr);
+                k++;
                 ptr = strtok(NULL, delim);
             }
             i++;
@@ -49,14 +78,43 @@ void read_txt(char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINS
             ptr = strtok(c, delim);
             while (ptr != NULL)
             {
-                for (int j = 0; j < 9; j++)
+                switch (k)
                 {
-                    trainingInput[k][j] = atof(ptr);
+                case 0:
+                    testingInput[j][0] = atof(ptr);
+                    break;
+                case 1:
+                    testingInput[j][1] = atof(ptr);
+                    break;
+                case 2:
+                    testingInput[j][2] = atoi(ptr);
+                    break;
+                case 3:
+                    testingInput[j][3] = atoi(ptr);
+                    break;
+                case 4:
+                    testingInput[j][4] = atoi(ptr);
+                    break;
+                case 5:
+                    testingInput[j][5] = atoi(ptr);
+                    break;
+                case 6:
+                    testingInput[j][6] = atof(ptr);
+                    break;
+                case 7:
+                    testingInput[j][7] = atoi(ptr);
+                    break;
+                case 8:
+                    testingInput[j][8] = atof(ptr);
+                    break;
+                case 9:
+                    testingOutput[j] = atoi(ptr);
+                    break;
                 }
-                trainingOutput[k] = atof(ptr);
+                k++;
                 ptr = strtok(NULL, delim);
             }
-            k++;
+            j++;
         }
     }
     fclose(fp);
@@ -76,7 +134,7 @@ double sigmoid(double x)
 void randWeight(double x[], int n)
 {
     int i;
-    for(i=0;i<n;i++)
+    for (i = 0; i < n; i++)
     {
         x[i] = randFrom(-1.0, 1.0);
     }
