@@ -32,16 +32,26 @@ int main()
     char c[TXT_LINE_SIZE];
     char txt_array[SIZE][TXT_LINE_SIZE]={};
     char* filename="fertility_Diagnosis_Data_Group1_4.txt";
-    double bias, error, mae, mmse;
+    double bias, error, sumAbsError, sumErrorSq, mae, mmse;
+    int i,k=1;
     read_txt(filename, c, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
     randWeight(weight,9);
     bias=randFrom(-1,1);
-    for (int i=0; i< TRAINSIZE; i++){
-        mae += m_a_e(sigmoid(linear_regression(trainingInput[i], weight, bias)), bias);
-        mmse += m_m_s_e(sigmoid(linear_regression(trainingInput[i], weight, bias)), bias);
+    do{
+        for (i=0; i<TRAINSIZE; i++)
+        {
+        sumAbsError += m_a_e(sigmoid(linear_regression(trainingInput[i], weight, bias)), testingOutput[i]);
+        sumErrorSq += m_m_s_e(sigmoid(linear_regression(trainingInput[i], weight, bias)), testingOutput[i]);
+        }
+        mae=sumAbsError/TRAINSIZE;
+        mmse=sumErrorSq/TRAINSIZE;
+        printf("MAE of iteration %d is: %f\n", k, mae);
+        sumAbsError=0;
+        sumErrorSq=0;
+        k++;
     }
-    mae/TRAINSIZE;
-    mmse/TRAINSIZE;
+    while(mae>0.25);
+    
 
 
     return 0;

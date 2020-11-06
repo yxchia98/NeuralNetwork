@@ -32,6 +32,7 @@ void read_txt(char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINS
     {
         if (i < TRAINSIZE)
         {
+            k=0;
             ptr = strtok(c, delim);
             while (ptr != NULL)
             {
@@ -75,6 +76,7 @@ void read_txt(char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINS
         }
         else
         {
+            k=0;
             ptr = strtok(c, delim);
             while (ptr != NULL)
             {
@@ -118,10 +120,6 @@ void read_txt(char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINS
         }
     }
     fclose(fp);
-}
-
-void train(double inputarray[SIZE][9], double outputarray[SIZE][1])
-{
 }
 
 double sigmoid(double x)
