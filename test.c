@@ -35,8 +35,20 @@ int main()
     double bias, error, mae;
     read_txt(filename, c, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
     randWeight(weight,9);
+
+
     bias=randFrom(-1,1);
     linear_regression(trainingInput[1], weight, 1);
+
+
+    for (int i=0; i< TRAINSIZE; i++){
+        mae += MAE(sigmoid(linear_regression(trainingInput[1], weight, 1)), bias);
+        mmse += MMSE(sigmoid(linear_regression(trainingInput[1], weight, 1)), bias);
+    }
+    mae/TRAINSIZE;
+    mmse/TRAINSIZE;
+
+
     return 0;
 }
 
