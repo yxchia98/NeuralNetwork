@@ -38,12 +38,12 @@ int main()
 
 
     bias=randFrom(-1,1);
-    linear_regression(trainingInput[1], weight, 1);
+    linear_regression(trainingInput[1], weight, bias);
 
 
     for (int i=0; i< TRAINSIZE; i++){
-        mae += m_a_e(sigmoid(linear_regression(trainingInput[1], weight, 1)), bias);
-        mmse += m_m_s_e(sigmoid(linear_regression(trainingInput[1], weight, 1)), bias);
+        mae += m_a_e(sigmoid(linear_regression(trainingInput[1], weight, bias)), bias);
+        mmse += m_m_s_e(sigmoid(linear_regression(trainingInput[1], weight, bias)), bias);
     }
     mae/TRAINSIZE;
     mmse/TRAINSIZE;
