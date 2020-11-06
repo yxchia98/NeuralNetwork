@@ -7,7 +7,7 @@
 #define TRAINSIZE 90
 #define TESTSIZE  10
 
-void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE][1], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE][1]);
+void read_txt(char* filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE][1], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE][1]);
 void train(double input[90][9], double outputarray[90][1]);
 void randWeight(double x[], int n);
 double randFrom(double min, double max);
@@ -16,7 +16,7 @@ void read_intArray(float array[]);
 double sigmoid(double x);
 
 //Reads from the .txt dataset file and assigns values in it into the corresponding attribute arrays
-void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE][1], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE][1])
+void read_txt(char* filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE][1], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE][1])
 {
     int i=0, j=0, k;
     FILE *fp;                               //file pointer
@@ -30,7 +30,7 @@ void read_txt(char* filename, char c[TXT_LINE_SIZE], char txt_array[SIZE][TXT_LI
     }
     while(fgets(c,TXT_LINE_SIZE,fp)!=NULL)
     {
-        strcpy(txt_array[i],c);             //Copy line from .txt file into string array
+        //strcpy(txt_array[i],c);             //Copy line from .txt file into string array
         if(i<TRAINSIZE)
         {
             k=0;
