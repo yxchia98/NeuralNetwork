@@ -4,6 +4,7 @@
 #include <string.h>
 #include "test1.h"
 #include "yongting.h"
+#include "MAE_MMSE.h"
 #define TXT_LINE_SIZE 41                    //maximum number of chars in per line in .txt file
 #define SIZE 100                            //size of dataset
 #define TRAINSIZE 90
