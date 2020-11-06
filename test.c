@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "test1.h"
+#include "yongting.h"
 #define TXT_LINE_SIZE 41                    //maximum number of chars in per line in .txt file
 #define SIZE 100                            //size of dataset
 #define TRAINSIZE 90
@@ -33,8 +34,12 @@ int main()
     double bias, error, mae;
     read_txt(filename, c, txt_array, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
     randWeight(weight,9);
+<<<<<<< HEAD
     bias=randFrom(-1,1);
     
+=======
+    linear_regression(trainingInput[1], weight, 1);
+>>>>>>> e58627b8e883d912faa0f49449fa9d283714da41
     return 0;
 }
 
