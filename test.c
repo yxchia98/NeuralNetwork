@@ -32,8 +32,8 @@ int main()
     char c[TXT_LINE_SIZE];
     char txt_array[SIZE][TXT_LINE_SIZE]={};
     char* filename="fertility_Diagnosis_Data_Group1_4.txt";
-    double bias, error, mae, mmse;
-    read_txt(filename, c, txt_array, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
+    double bias, error, mae;
+    read_txt(filename, c, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
     randWeight(weight,9);
 
 
@@ -42,8 +42,8 @@ int main()
 
 
     for (int i=0; i< TRAINSIZE; i++){
-        mae += MAE(sigmoid(linear_regression(trainingInput[1], weight, 1)), bias);
-        mmse += MMSE(sigmoid(linear_regression(trainingInput[1], weight, 1)), bias);
+        mae += m_a_e(sigmoid(linear_regression(trainingInput[1], weight, 1)), bias);
+        mmse += m_m_s_e(sigmoid(linear_regression(trainingInput[1], weight, 1)), bias);
     }
     mae/TRAINSIZE;
     mmse/TRAINSIZE;
