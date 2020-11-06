@@ -36,9 +36,8 @@ int main()
     read_txt(filename, c, txt_array, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
     randWeight(weight,9);
 
-    bias=randFrom(-1,1);
-    
 
+    bias=randFrom(-1,1);
     linear_regression(trainingInput[1], weight, 1);
 
 
