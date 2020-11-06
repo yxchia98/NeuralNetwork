@@ -31,7 +31,6 @@ int main()
     char txt_array[SIZE][TXT_LINE_SIZE]={};
     char* filename="fertility_Diagnosis_Data_Group1_4.txt";
     double error, mae;
-    printf("Size of array in bytes:%d",sizeof(weight));
     read_txt(filename, c, txt_array, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
     randWeight(weight,9);
     return 0;
