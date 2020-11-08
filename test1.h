@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
-#define TXT_LINE_SIZE 41 //maximum number of chars in per line in .txt file
+#define TXT_LINE_SIZE 45 //maximum number of chars in per line in .txt file
 #define SIZE 100         //size of dataset
 #define TRAINSIZE 90
 #define TESTSIZE 10
