@@ -7,7 +7,7 @@
 #define TRAINSIZE 90
 #define TESTSIZE 10
 
-void read_txt(char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE]);
+void read_txt(const char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE]);
 void train(double input[90][9], double outputarray[90][1]);
 void randWeight(double x[], int n);
 double randFrom(double min, double max);
@@ -16,12 +16,11 @@ void read_intArray(float array[]);
 double sigmoid(double x);
 
 //Reads from the .txt dataset file and assigns values in it into the corresponding attribute arrays
-void read_txt(char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE])
+void read_txt(const char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE])
 {
     int i = 0, j = 0, k;
     FILE *fp; //file pointer
     char *ptr;
-    char delim[] = ",";
     fp = fopen(filename, "r"); //open file, read only
     if (fp == NULL)
     {
@@ -30,94 +29,29 @@ void read_txt(char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINS
     }
     while (fgets(c, TXT_LINE_SIZE, fp) != NULL)
     {
-        if (i < TRAINSIZE)
+        if(i<90)
         {
-            k=0;
-            ptr = strtok(c, delim);
-            while (ptr != NULL)
+            ptr=strtok(c,",");
+            for(k=0;k<9;k++)
             {
-                switch (k)
-                {
-                case 0:
-                    trainingInput[i][0] = atof(ptr);
-                    break;
-                case 1:
-                    trainingInput[i][1] = atof(ptr);
-                    break;
-                case 2:
-                    trainingInput[i][2] = atoi(ptr);
-                    break;
-                case 3:
-                    trainingInput[i][3] = atoi(ptr);
-                    break;
-                case 4:
-                    trainingInput[i][4] = atoi(ptr);
-                    break;
-                case 5:
-                    trainingInput[i][5] = atoi(ptr);
-                    break;
-                case 6:
-                    trainingInput[i][6] = atof(ptr);
-                    break;
-                case 7:
-                    trainingInput[i][7] = atoi(ptr);
-                    break;
-                case 8:
-                    trainingInput[i][8] = atof(ptr);
-                    break;
-                case 9:
-                    trainingOutput[i] = atoi(ptr);
-                    break;
-                }
-                k++;
-                ptr = strtok(NULL, delim);
+                trainingInput[i][k]=atof(ptr);
+                ptr=strtok(NULL,",");
             }
+            trainingOutput[i]=atof(ptr);
             i++;
         }
         else
         {
-            k=0;
-            ptr = strtok(c, delim);
-            while (ptr != NULL)
+            ptr=strtok(c,",");
+            for(k=0;k<9;k++)
             {
-                switch (k)
-                {
-                case 0:
-                    testingInput[j][0] = atof(ptr);
-                    break;
-                case 1:
-                    testingInput[j][1] = atof(ptr);
-                    break;
-                case 2:
-                    testingInput[j][2] = atoi(ptr);
-                    break;
-                case 3:
-                    testingInput[j][3] = atoi(ptr);
-                    break;
-                case 4:
-                    testingInput[j][4] = atoi(ptr);
-                    break;
-                case 5:
-                    testingInput[j][5] = atoi(ptr);
-                    break;
-                case 6:
-                    testingInput[j][6] = atof(ptr);
-                    break;
-                case 7:
-                    testingInput[j][7] = atoi(ptr);
-                    break;
-                case 8:
-                    testingInput[j][8] = atof(ptr);
-                    break;
-                case 9:
-                    testingOutput[j] = atoi(ptr);
-                    break;
-                }
-                k++;
-                ptr = strtok(NULL, delim);
+                testingInput[j][k]=atof(ptr);
+                ptr=strtok(NULL,",");
             }
+            testingOutput[j]=atof(ptr);
             j++;
         }
+        
     }
     fclose(fp);
 }
