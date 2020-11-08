@@ -5,10 +5,12 @@
 #include "test1.h"
 #include "yongting.h"
 #include "MAE_MMSE.h"
-#define TXT_LINE_SIZE 41                    //maximum number of chars in per line in .txt file
-#define SIZE 100                            //size of dataset
+#define TXT_LINE_SIZE 41 //maximum number of chars in per line in .txt file
+#define SIZE 100         //size of dataset
 #define TRAINSIZE 90
-#define TESTSIZE  10
+#define TESTSIZE 10
+#define LEARNING_RATE 0.05
+#define NUM_INPUT 9
 
 /**********************************************************************************************
 Basic elements inside Input arrays(trainingInput/testingInput)          Datatype(range)
@@ -28,32 +30,42 @@ Basic elements inside Output arrays(trainingOutput/testingOutput)       Datatype
 
 int main()
 {
-    static double weight[9], trainingInput[TRAINSIZE][9], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][9], testingOutput[TESTSIZE];
+    static double weight[NUM_INPUT], trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE], sumWeightChange[NUM_INPUT];
     char c[TXT_LINE_SIZE];
-    char txt_array[SIZE][TXT_LINE_SIZE]={};
-    char* filename="fertility_Diagnosis_Data_Group1_4.txt";
+    char txt_array[SIZE][TXT_LINE_SIZE] = {};
+    char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
     double bias, error, sumAbsError, sumErrorSq, mae, mmse;
-    int i,k=1;
-    read_txt(filename, c, trainingInput, trainingOutput, testingInput, testingOutput);               // reads txt file and assigns it into txt_array
-    randWeight(weight,9);
-    bias=randFrom(-1,1);
-    do{
-        for (i=0; i<TRAINSIZE; i++)
+    int i, k = 1;
+    read_txt(filename, c, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
+    randWeight(weight, 9);
+    bias = randFrom(-1, 1);
+    do
+    {
+        for (i = 0; i < TRAINSIZE; i++)
         {
-        sumAbsError += m_a_e(sigmoid(linear_regression(trainingInput[i], weight, bias)), testingOutput[i]);
-        sumErrorSq += m_m_s_e(sigmoid(linear_regression(trainingInput[i], weight, bias)), testingOutput[i]);
+            double linear_regression_val = linear_regression(trainingInput[i], weight, bias);
+            sumErrorSq += m_m_s_e(sigmoid(linear_regression_val), testingOutput[i]);
+            double current_mae = m_a_e(sigmoid(linear_regression_val), testingOutput[i]);
+            sumAbsError += current_mae;
+            double abc = linear_regression_val - testingOutput[i];
+            for (int j = 0; j < NUM_INPUT; j++)
+            {
+                sumWeightChange[j] += backward_propogation(abc, trainingInput[i][j], linear_regression_val);
+            }
         }
-        mae=sumAbsError/TRAINSIZE;
-        mmse=sumErrorSq/TRAINSIZE;
-        printf("MAE of iteration %d is: %f\n", k, mae);
-        sumAbsError=0;
-        sumErrorSq=0;
+        mae = sumAbsError / TRAINSIZE;
+        mmse = sumErrorSq / TRAINSIZE;
+        printf("\n\nMAE of iteration %d is: %f\n", k, mae);
+        //update weight
+        for (int l = 0; l < NUM_INPUT; l++)
+        {
+            weight[l] -= LEARNING_RATE * sumWeightChange[l] / 90;
+            printf("\nWEIGHT %d value is: %f", l, weight[l]);
+        }
+        sumAbsError = 0;
+        sumErrorSq = 0;
         k++;
-    }
-    while(mae>0.25);
-    
-
+    } while (mae > 0.25);
 
     return 0;
 }
-
