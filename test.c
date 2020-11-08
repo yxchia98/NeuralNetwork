@@ -50,7 +50,7 @@ int main()
             double abc = linear_regression_val - testingOutput[i];
             for (int j = 0; j < NUM_INPUT; j++)
             {
-                sumWeightChange[j] += backward_propogation(abc, trainingInput[i][j], linear_regression_val);
+                sumWeightChange[j] = backward_propogation(abc, trainingInput[i][j], linear_regression_val);
             }
         }
         mae = sumAbsError / TRAINSIZE;
