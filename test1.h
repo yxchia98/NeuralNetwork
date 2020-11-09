@@ -18,42 +18,25 @@ double sigmoid(double x);
 //Reads from the .txt dataset file and assigns values in it into the corresponding attribute arrays
 void read_txt(const char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE])
 {
-    int i = 0, j = 0, k;
-    FILE *fp; //file pointer
-    char *ptr;
-    fp = fopen(filename, "r"); //open file, read only
-    if (fp == NULL)
+    FILE *ptr;
+    ptr=fopen(filename,"r");
+    int i=0, k=0;
+    char *token;
+    if(ptr==NULL)
     {
-        printf("Could not open filename %s", filename);
-        exit;
+        printf("fertility_Diagnosis_Data_Group1_4.txt file not found\n");
     }
-    while (fgets(c, TXT_LINE_SIZE, fp) != NULL)
+    while(fscanf(ptr,"%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf",&trainingInput[i][0],&trainingInput[i][1],&trainingInput[i][2],&trainingInput[i][3],&trainingInput[i][4],&trainingInput[i][5],&trainingInput[i][6],&trainingInput[i][7],&trainingInput[i][8],&trainingOutput[i])!=EOF)
     {
-        if(i<90)
-        {
-            ptr=strtok(c,",");
-            for(k=0;k<9;k++)
-            {
-                trainingInput[i][k]=atof(ptr);
-                ptr=strtok(NULL,",");
-            }
-            trainingOutput[i]=atof(ptr);
-            i++;
-        }
+        if(i==89)
+        break;
         else
-        {
-            ptr=strtok(c,",");
-            for(k=0;k<9;k++)
-            {
-                testingInput[j][k]=atof(ptr);
-                ptr=strtok(NULL,",");
-            }
-            testingOutput[j]=atof(ptr);
-            j++;
-        }
-        
+        i++;
     }
-    fclose(fp);
+    while(fscanf(ptr,"%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf",&testingInput[k][0],&testingInput[k][1],&testingInput[k][2],&testingInput[k][3],&testingInput[k][4],&testingInput[k][5],&testingInput[k][6],&testingInput[k][7],&testingInput[k][8],&testingOutput[k])!=EOF)
+    {
+        k++;
+    }
 }
 
 double sigmoid(double x)
