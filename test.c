@@ -34,7 +34,7 @@ int main()
     char c[TXT_LINE_SIZE];
     char txt_array[SIZE][TXT_LINE_SIZE] = {};
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
-    double bias, error, sumAbsError, sumErrorSq, mae, mmse;
+    double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange;
     int i, k = 1;
     read_txt(filename, c, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
     randWeight(weight, 9);
@@ -50,18 +50,23 @@ int main()
             double abc = linear_regression_val - testingOutput[i];
             for (int j = 0; j < NUM_INPUT; j++)
             {
-                sumWeightChange[j] = backward_propogation(abc, trainingInput[i][j], linear_regression_val);
+                sumWeightChange[j] += backward_propogation(abc, trainingInput[i][j], linear_regression_val);
             }
+            sumBiasChange += backward_propogation(abc, 1, linear_regression_val);
         }
         mae = sumAbsError / TRAINSIZE;
         mmse = sumErrorSq / TRAINSIZE;
-        printf("\n\nMAE of iteration %d is: %f\n", k, mae);
+        printf("\nMAE of iteration %d is: %f", k, mae);
         //update weight
         for (int l = 0; l < NUM_INPUT; l++)
         {
             weight[l] -= LEARNING_RATE * sumWeightChange[l] / 90;
-            printf("\nWEIGHT %d value is: %f", l, weight[l]);
+            //printf("\nWEIGHT %d value is: %f", l, weight[l]);
+            sumWeightChange[l] = 0;
         }
+        //update bias
+        bias -= LEARNING_RATE * sumBiasChange;
+        sumBiasChange = 0;
         sumAbsError = 0;
         sumErrorSq = 0;
         k++;
