@@ -32,8 +32,8 @@ int main()
 {
     static double weight[NUM_INPUT], trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE], sumWeightChange[NUM_INPUT];
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
-    double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange;
-    int i, k = 1;
+    double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange, linear_regression_val, current_mae, current_error;
+    int i, j, k = 1;
     read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
     randWeight(weight, 9);
     bias = randFrom(-1, 1);
@@ -44,16 +44,16 @@ int main()
         }
         for (i = 0; i < TRAINSIZE; i++)
         {
-            double linear_regression_val = linear_regression(trainingInput[i], weight, bias);
+            linear_regression_val = linear_regression(trainingInput[i], weight, bias);
             sumErrorSq += m_m_s_e(sigmoid(linear_regression_val), testingOutput[i]);
-            double current_mae = m_a_e(sigmoid(linear_regression_val), testingOutput[i]);
+            current_mae = m_a_e(sigmoid(linear_regression_val), testingOutput[i]);
             sumAbsError += current_mae;
-            double abc = sigmoid(linear_regression_val) - testingOutput[i];
-            for (int j = 0; j < NUM_INPUT; j++)
+            current_error = sigmoid(linear_regression_val) - testingOutput[i];
+            for (j = 0; j < NUM_INPUT; j++)
             {
-                sumWeightChange[j] += backward_propogation(abc, trainingInput[i][j], linear_regression_val);
+                sumWeightChange[j] += backward_propogation(current_error, trainingInput[i][j], linear_regression_val);
             }
-            sumBiasChange += backward_propogation(abc, 1, linear_regression_val);
+            sumBiasChange += backward_propogation(current_error, 1, linear_regression_val);
         }
         mae = sumAbsError / TRAINSIZE;
         mmse = sumErrorSq / TRAINSIZE;
