@@ -32,33 +32,33 @@ int main()
 {
     static double weight[NUM_INPUT], trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE], sumWeightChange[NUM_INPUT];
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
-    double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange, linear_regression_val, current_error, delta;
+    double bias, error, mae_summation, mmse_summation, mae, mmse, sumBiasChange, linear_regression_val, current_error, delta;
     int i, j, k, l;
     k = 1;
     read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
     randWeight(weight, 9);
-    bias = randFrom(-1, 1);
+    bias = 1;
     do
     {
         for (i = 0; i < TRAINSIZE; i++)
         {
             linear_regression_val = linear_regression(trainingInput[i], weight, bias);
-            sumErrorSq += m_m_s_e(sigmoid(linear_regression_val), testingOutput[i]);
-            sumAbsError +=  m_a_e(sigmoid(linear_regression_val), testingOutput[i]);
-            current_error = sigmoid(linear_regression_val) - testingOutput[i];
+            current_error = sigmoid(linear_regression_val) - trainingOutput[i];
+            mmse_summation += pow(current_error, 2);
+            mae_summation += fabs(current_error);
+            sumBiasChange += backward_propogation(current_error, linear_regression_val, 1);
             for (j = 0; j < NUM_INPUT; j++)
             {
-                sumWeightChange[j] += backward_propogation(current_error, trainingInput[i][j], linear_regression_val);
+                sumWeightChange[j] += backward_propogation(current_error, linear_regression_val, trainingInput[i][j]);
             }
-            sumBiasChange += backward_propogation(current_error, 1, linear_regression_val);
         }
-        mae = sumAbsError / TRAINSIZE;
-        mmse = sumErrorSq / TRAINSIZE;
+        mmse = mmse_summation / TRAINSIZE;
+        mae = mae_summation / TRAINSIZE;
         printf("\nMAE of iteration %d is: %f", k, mae);
         //update weight
         for (int l = 0; l < NUM_INPUT; l++)
         {
-            delta = sumWeightChange[l] / 90;
+            delta = sumWeightChange[l] / TRAINSIZE;
             weight[l] -= LEARNING_RATE * delta;
             //printf("\nWEIGHT %d value is: %f", l, weight[l]);
             sumWeightChange[l] = 0;
@@ -67,8 +67,8 @@ int main()
         delta = sumBiasChange / 90;
         bias -= LEARNING_RATE * delta;
         sumBiasChange = 0;
-        sumAbsError = 0;
-        sumErrorSq = 0;
+        mmse_summation = 0;
+        mae_summation = 0;
         k++;
     } while (mae > 0.0);
 
