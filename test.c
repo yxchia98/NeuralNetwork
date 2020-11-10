@@ -32,7 +32,7 @@ int main()
 {
     static double weight[NUM_INPUT], trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE], sumWeightChange[NUM_INPUT];
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
-    double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange, linear_regression_val, current_mae, current_error, delta;
+    double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange, linear_regression_val, current_error, delta;
     int i, j, k, l;
     k = 1;
     read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
@@ -40,15 +40,11 @@ int main()
     bias = randFrom(-1, 1);
     do
     {
-        for(int m =0; m<NUM_INPUT; m++){
-            sumWeightChange[m] = 0;
-        }
         for (i = 0; i < TRAINSIZE; i++)
         {
             linear_regression_val = linear_regression(trainingInput[i], weight, bias);
             sumErrorSq += m_m_s_e(sigmoid(linear_regression_val), testingOutput[i]);
-            current_mae = m_a_e(sigmoid(linear_regression_val), testingOutput[i]);
-            sumAbsError += current_mae;
+            sumAbsError +=  m_a_e(sigmoid(linear_regression_val), testingOutput[i]);
             current_error = sigmoid(linear_regression_val) - testingOutput[i];
             for (j = 0; j < NUM_INPUT; j++)
             {
