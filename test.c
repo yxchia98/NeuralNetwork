@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "test1.h"
 #include "yongting.h"
 #include "MAE_MMSE.h"
@@ -31,12 +32,14 @@ int main()
 {
     static double weight[NUM_INPUT], trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE], sumWeightChange[NUM_INPUT];
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
-    double bias, error, mae_summation, mmse_summation, mae, mmse, sumBiasChange, linear_regression_val, current_error, delta;
+    double bias, error, mae_summation, untrained_mae, untrained_mmse, mmse_summation, mae, mmse, sumBiasChange, linear_regression_val, current_error, delta;
     int i, j, k, l;
+    clock_t start, elapsed;
     k = 1;
     read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
     randWeight(weight, 9);
     bias = randFrom(-1, 1);
+    start = clock();
     do
     {
         linear_regression_val=0;
@@ -54,7 +57,12 @@ int main()
         }
         mmse = mmse_summation / TRAINSIZE;
         mae = mae_summation / TRAINSIZE;
-        printf("\nMAE of iteration %d is: %f", k, mae);
+        if(k==1)
+        {
+            untrained_mmse = mmse;
+            untrained_mae = mae;
+        }
+        printf("\nAt Iteration %d, MAE is: %lf, MMSE is: %lf ", k, mae, mmse);
         //update weight
         for (int l = 0; l < NUM_INPUT; l++)
         {
@@ -71,6 +79,9 @@ int main()
         mae_summation = 0;
         k++;
     } while (mae > 0.25);
+    elapsed = (clock() - start)*1000/CLOCKS_PER_SEC;
+    printf("\nUntrained MAE is: %lf, untrained MMSE is: %lf", untrained_mae, untrained_mmse);
+    printf("\nTime taken: %dms", elapsed);
 
     return 0;
 }
