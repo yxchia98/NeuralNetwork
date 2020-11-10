@@ -33,7 +33,8 @@ int main()
     static double weight[NUM_INPUT], trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE], sumWeightChange[NUM_INPUT];
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
     double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange, linear_regression_val, current_mae, current_error;
-    int i, j, k = 1;
+    int i, j, k, l;
+    k = 1;
     read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
     randWeight(weight, 9);
     bias = randFrom(-1, 1);
