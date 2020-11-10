@@ -7,7 +7,7 @@
 #define TRAINSIZE 90
 #define TESTSIZE 10
 
-void read_txt(const char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE]);
+void read_txt(const char *filename, double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE]);
 void train(double input[90][9], double outputarray[90][1]);
 void randWeight(double x[], int n);
 double randFrom(double min, double max);
@@ -16,7 +16,7 @@ void read_intArray(float array[]);
 double sigmoid(double x);
 
 //Reads from the .txt dataset file and assigns values in it into the corresponding attribute arrays
-void read_txt(const char *filename, char c[TXT_LINE_SIZE], double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE])
+void read_txt(const char *filename, double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE])
 {
     FILE *ptr;
     ptr=fopen(filename,"r");

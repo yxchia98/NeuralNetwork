@@ -31,12 +31,10 @@ Basic elements inside Output arrays(trainingOutput/testingOutput)       Datatype
 int main()
 {
     static double weight[NUM_INPUT], trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE], sumWeightChange[NUM_INPUT];
-    char c[TXT_LINE_SIZE];
-    char txt_array[SIZE][TXT_LINE_SIZE] = {};
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
     double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange;
     int i, k = 1;
-    read_txt(filename, c, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
+    read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
     randWeight(weight, 9);
     bias = randFrom(-1, 1);
     do
