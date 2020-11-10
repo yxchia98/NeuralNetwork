@@ -32,7 +32,7 @@ int main()
 {
     static double weight[NUM_INPUT], trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE], sumWeightChange[NUM_INPUT];
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
-    double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange, linear_regression_val, current_mae, current_error;
+    double bias, error, sumAbsError, sumErrorSq, mae, mmse, sumBiasChange, linear_regression_val, current_mae, current_error, delta;
     int i, j, k, l;
     k = 1;
     read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
@@ -62,17 +62,19 @@ int main()
         //update weight
         for (int l = 0; l < NUM_INPUT; l++)
         {
-            weight[l] -= LEARNING_RATE * sumWeightChange[l] / 90;
+            delta = sumWeightChange[l] / 90;
+            weight[l] -= LEARNING_RATE * delta;
             //printf("\nWEIGHT %d value is: %f", l, weight[l]);
             sumWeightChange[l] = 0;
         }
         //update bias
-        bias -= LEARNING_RATE * sumBiasChange;
+        delta = sumBiasChange / 90;
+        bias -= LEARNING_RATE * delta;
         sumBiasChange = 0;
         sumAbsError = 0;
         sumErrorSq = 0;
         k++;
-    } while (mae > 0.25);
+    } while (mae > 0.0);
 
     return 0;
 }
