@@ -5,7 +5,6 @@
 #include "test1.h"
 #include "yongting.h"
 #include "MAE_MMSE.h"
-#define TXT_LINE_SIZE 41 //maximum number of chars in per line in .txt file
 #define SIZE 100         //size of dataset
 #define TRAINSIZE 90
 #define TESTSIZE 10
@@ -37,9 +36,10 @@ int main()
     k = 1;
     read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
     randWeight(weight, 9);
-    bias = 1;
+    bias = randFrom(-1, 1);
     do
     {
+        linear_regression_val=0;
         for (i = 0; i < TRAINSIZE; i++)
         {
             linear_regression_val = linear_regression(trainingInput[i], weight, bias);
@@ -70,7 +70,7 @@ int main()
         mmse_summation = 0;
         mae_summation = 0;
         k++;
-    } while (mae > 0.0);
+    } while (mae > 0.25);
 
     return 0;
 }
