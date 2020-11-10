@@ -39,13 +39,16 @@ int main()
     bias = randFrom(-1, 1);
     do
     {
+        for(int m =0; m<NUM_INPUT; m++){
+            sumWeightChange[m] = 0;
+        }
         for (i = 0; i < TRAINSIZE; i++)
         {
             double linear_regression_val = linear_regression(trainingInput[i], weight, bias);
             sumErrorSq += m_m_s_e(sigmoid(linear_regression_val), testingOutput[i]);
             double current_mae = m_a_e(sigmoid(linear_regression_val), testingOutput[i]);
             sumAbsError += current_mae;
-            double abc = linear_regression_val - testingOutput[i];
+            double abc = sigmoid(linear_regression_val) - testingOutput[i];
             for (int j = 0; j < NUM_INPUT; j++)
             {
                 sumWeightChange[j] += backward_propogation(abc, trainingInput[i][j], linear_regression_val);
