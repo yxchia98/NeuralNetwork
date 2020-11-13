@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <math.h>
+#include "assignment.h"
 
-double linear_regression(double arrayX[9], double arrayW[9], double bias);
-double backward_propogation(double current_error, double z, float x);
 double linear_regression(double arrayX[9], double arrayW[9], double bias)
 {
     double sum;
