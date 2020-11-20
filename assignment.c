@@ -108,7 +108,7 @@ int main()
         int output = testingOutput[i];
 
         /* Negative predicted result will be 0, Postive predicted result will be 1 for confusion matrix*******/
-        if (predictedY <= 0)
+        if (predictedY < 0.5)
         {
             if (output == 0)
             {
@@ -119,7 +119,7 @@ int main()
                 fn += 1; //false negative
             }
         }
-        else if (predictedY > 0)
+        else if (predictedY > 0.5)
         {
             if (output == 1)
             {
