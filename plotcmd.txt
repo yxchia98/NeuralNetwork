@@ -1,1 +1,1 @@
-plot "MAEGraph.txt" with lines linecolor rgb "red" title "MAE"
+plot 'MAEGraph.txt' with lines linecolor 'red' title 'MAE'

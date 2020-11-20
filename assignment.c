@@ -140,6 +140,7 @@ int main()
     printf("\n\nConfusion Matrix for 10 testing dataset\nTrue Positive  : %d \nFalse Positive : %d \nTrue Negative  : %d \nFalse Negative : %d ", tp, fp, tn, fn);
     printf("\nMMSE of testing dataset: %lf", mmse);
     fclose(plotptr);
+    system("gnuplot -p plotcmd.txt");
 
     return 0;
 }
