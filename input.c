@@ -35,6 +35,13 @@ double sigmoid(double x)
     return result;
 }
 
+double deSigmoid(double x)
+{
+    double result;
+    result = exp(x) / pow(1 + exp(x), 2);
+    return result;
+}
+
 void randWeight(double x[], int n)
 {
     int i;

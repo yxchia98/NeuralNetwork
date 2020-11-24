@@ -11,6 +11,7 @@ void read_txt(const char *filename, double trainingInput[TRAINSIZE][9], double t
 void train(double input[90][9], double outputarray[90][1]);
 void randWeight(double x[], int n);
 double randFrom(double min, double max);
+double deSigmoid(double x);
 double sigmoid(double x);
 double linear_regression(double arrayX[9], double arrayW[9], double bias);
 double backward_propogation(double current_error, double z, float x);
