@@ -107,7 +107,7 @@ int main()
             }
         }
         
-    } while (mae);
+    } while (mae>0.15);
 
     return 0;
 }
