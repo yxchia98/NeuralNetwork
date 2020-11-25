@@ -9,7 +9,7 @@
 #define TESTSIZE 10
 #define LEARNING_RATE 0.05
 #define NUM_INPUT 9
-#define TARGETED_MAE 0.25
+#define TARGETED_MAE 0.22
 
 /**********************************************************************************************
 Basic elements inside Input arrays(trainingInput/testingInput)          Datatype(range)

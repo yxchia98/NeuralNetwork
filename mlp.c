@@ -11,7 +11,8 @@
 #define SIZE 100         //size of dataset
 #define TRAINSIZE 90
 #define TESTSIZE 10
-#define LEARNING_RATE 0.10
+#define LEARNING_RATE 0.20
+#define TARGETED_MAE 0.20
 #define NUM_INPUT 9
 #define NUM_LAYER1 7
 #define NUM_LAYER2 3
@@ -167,7 +168,7 @@ int main()
         output_bias -= LEARNING_RATE * output_bias_update;
         output_bias_update = 0;
 
-    } while (mae > 0.22);
+    } while (mae > TARGETED_MAE);
     elapsed = (clock() - start) * 1000 / CLOCKS_PER_SEC;
     printf("\nUntrained MAE is: %lf, untrained MMSE is: %lf", untrained_mae, untrained_mmse);
     printf("\nTime taken: %dms", elapsed);
