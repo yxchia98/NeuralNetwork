@@ -7,9 +7,9 @@
 #define SIZE 100 //size of dataset
 #define TRAINSIZE 90
 #define TESTSIZE 10
-#define LEARNING_RATE 0.05
+#define LEARNING_RATE 2
 #define NUM_INPUT 9
-#define TARGETED_MAE 0.22
+#define TARGETED_MAE 0.07
 
 /**********************************************************************************************
 Basic elements inside Input arrays(trainingInput/testingInput)          Datatype(range)
