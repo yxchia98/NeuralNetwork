@@ -176,8 +176,82 @@ int main()
     tn = 0;
     fp = 0;
     fn = 0;
+    sumErrorSq = 0;
 
-    //FEEDFORAWRD PORTION
+    //TESTING SET
+    for (i = 0; i < TRAINSIZE; i++)
+    {
+        for (j = 0; j < NUM_LAYER2; j++) //layer 2
+        {
+            for (k = 0; k < NUM_LAYER1; k++) //layer 1
+            {
+                for (l = 0; l < NUM_INPUT; l++) //input layer
+                {
+                    layer1Sum += trainingInput[i][l] * input_weight[k][l];
+                }
+                layer1Sum += layer1_bias[k];
+                layer1_summation[i][k] = layer1Sum;
+                layer1_output[i][k] = sigmoid(layer1Sum);
+                layer1Sum = 0;
+
+                layer2Sum += layer1_output[i][k] * layer1_weight[j][k];
+            }
+            layer2Sum += layer2_bias[j];
+            layer2_summation[i][j] = layer2Sum;
+            layer2_output[i][j] = sigmoid(layer2Sum);
+            layer2Sum = 0;
+
+            outputSum += layer2_output[i][j] * layer2_weight[j];
+        }
+        outputSum += output_bias;
+
+        //output_summation[i] = outputSum;
+        current_error = sigmoid(outputSum) - trainingOutput[i];
+
+        output_error[i] = current_error;
+        //sumAbsError += fabs(current_error);
+        sumErrorSq += pow(current_error, 2);
+
+        double predictedY = sigmoid(outputSum);
+        int output = trainingOutput[i];
+        /* Negative predicted result will be 0, Postive predicted result will be 1 for confusion matrix*******/
+        if (predictedY < 0.5)
+        {
+            if (output == 0)
+            {
+                tn += 1; //true negative
+            }
+            else if (output == 1)
+            {
+                fn += 1; //false negative
+            }
+        }
+        else if (predictedY >= 0.5)
+        {
+            if (output == 1)
+            {
+                tp += 1; //true postive
+            }
+            else if (output == 0)
+            {
+                fp += 1; //false postive
+            }
+        }
+        /**************************************************************************************/
+        outputSum = 0;
+    }
+    mmse = sumErrorSq / TRAINSIZE;
+    sumErrorSq = 0;
+    printf("\n\nConfusion Matrix for 90 training dataset\nTrue Positive  : %d \nFalse Positive : %d \nTrue Negative  : %d \nFalse Negative : %d ", tp, fp, tn, fn);
+    printf("\nMMSE of training dataset: %lf", mmse);
+    
+    //Reset Confusion Matrix
+    tp = 0;
+    tn = 0;
+    fp = 0;
+    fn = 0;
+
+    //TESTING SET
     for (i = 0; i < TESTSIZE; i++)
     {
         for (j = 0; j < NUM_LAYER2; j++) //layer 2
@@ -225,7 +299,7 @@ int main()
                 fn += 1; //false negative
             }
         }
-        else if (predictedY > 0.5)
+        else if (predictedY >= 0.5)
         {
             if (output == 1)
             {
@@ -240,6 +314,7 @@ int main()
         outputSum = 0;
     }
     mmse = sumErrorSq / TESTSIZE;
+    sumErrorSq = 0;
     printf("\n\nConfusion Matrix for 10 testing dataset\nTrue Positive  : %d \nFalse Positive : %d \nTrue Negative  : %d \nFalse Negative : %d ", tp, fp, tn, fn);
     printf("\nMMSE of testing dataset: %lf", mmse);
     fclose(plotptr);
