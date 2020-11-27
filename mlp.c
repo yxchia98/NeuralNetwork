@@ -128,6 +128,7 @@ int main()
         outputSum = 0;
     }
     mmse = sumErrorSq / TESTSIZE;
+    //1 is testing set before training
     mmse_arr[1] = mmse;
     do
     {
@@ -174,6 +175,7 @@ int main()
         done = 1;
         mae = sumAbsError / 90;
         mmse = sumErrorSq / 90;
+        //0 is training set before training
         mmse_arr[0] = mmse;
         if (m == 1)
         {
