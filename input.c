@@ -28,19 +28,6 @@ void read_txt(const char *filename, double trainingInput[TRAINSIZE][9], double t
     }
 }
 
-double sigmoid(double x)
-{
-    double result;
-    result = 1 / (1 + exp(-x));
-    return result;
-}
-
-double deSigmoid(double x)
-{
-    double result;
-    result = exp(x) / pow(1 + exp(x), 2);
-    return result;
-}
 
 void randWeight(double x[], int n)
 {

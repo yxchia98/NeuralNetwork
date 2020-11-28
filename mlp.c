@@ -4,18 +4,8 @@
 #include <string.h>
 #include <time.h>
 #include "assignment.h"
-#include "input.c"
-#include "regression.c"
-
-#define TXT_LINE_SIZE 45 //maximum number of chars in per line in .txt file
-#define SIZE 100         //size of dataset
-#define TRAINSIZE 90
-#define TESTSIZE 10
-#define LEARNING_RATE 0.69
-#define TARGETED_MAE 0.08
-#define NUM_INPUT 9
-#define NUM_LAYER1 6
-#define NUM_LAYER2 4
+// #include "input.c"
+// #include "process.c"
 
 /**********************************************************************************************
 Basic elements inside Input arrays(trainingInput/testingInput)          Datatype(range)
@@ -42,7 +32,7 @@ int main()
     static double output_bias_update, layer2_weight_update[NUM_LAYER2], layer2_bias_update[NUM_LAYER2], layer1_weight_update[NUM_LAYER2][NUM_LAYER1], layer1_bias_update[NUM_LAYER1], input_weight_update[NUM_LAYER1][NUM_INPUT];
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
     FILE *plotptr;
-    double sumAbsError, sumErrorSq, mae, mmse, untrained_mae, untrained_mmse, sumBiasChange, layer1Sum, layer2Sum, outputSum, current_error, error_output, error_layer1[NUM_LAYER1], error_layer2[NUM_LAYER2];
+    double sumAbsError, sumErrorSq, mae, mmse, untrained_mae, untrained_mmse, layer1Sum, layer2Sum, outputSum, current_error;
     int i, j, k, l, m, n, tp, fp, fn, tn;
     clock_t start, elapsed;
     m = 1;
@@ -67,39 +57,8 @@ int main()
     }
     do
     {
-        //FEEDFORAWRD PORTION
-        for (i = 0; i < TRAINSIZE; i++)
-        {
-            for (j = 0; j < NUM_LAYER2; j++) //layer 2
-            {
-                for (k = 0; k < NUM_LAYER1; k++) //layer 1
-                {
-                    for (l = 0; l < NUM_INPUT; l++) //input layer
-                    {
-                        layer1Sum += trainingInput[i][l] * input_weight[k][l];
-                    }
-                    layer1Sum += layer1_bias[k];
-                    layer1_summation[i][k] = layer1Sum;
-                    layer1_output[i][k] = sigmoid(layer1Sum);
-                    layer1Sum = 0;
-
-                    layer2Sum += layer1_output[i][k] * layer1_weight[j][k];
-                }
-                layer2Sum += layer2_bias[j];
-                layer2_summation[i][j] = layer2Sum;
-                layer2_output[i][j] = sigmoid(layer2Sum);
-                layer2Sum = 0;
-
-                outputSum += layer2_output[i][j] * layer2_weight[j];
-            }
-            outputSum += output_bias;
-            output_summation[i] = outputSum;
-            current_error = sigmoid(outputSum) - trainingOutput[i];
-            output_error[i] = current_error;
-            sumAbsError += fabs(current_error);
-            sumErrorSq += pow(current_error, 2);
-            outputSum = 0;
-        }
+        //call feedforward function
+        feedforward(trainingInput, trainingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias, layer1_output, layer1_summation, layer2_output, layer2_summation, output_error, output_summation, &sumAbsError, &sumErrorSq, &layer1Sum, &layer2Sum, &outputSum, &current_error);
 
         mae = sumAbsError / 90;
         mmse = sumErrorSq / 90;
@@ -114,70 +73,11 @@ int main()
         sumAbsError = 0;
         m++;
 
-        //BACKPROPAGATE PORTION
-        //BACKPROPAGATE PORTION
-        for (i = 0; i < TRAINSIZE; i++)
-        {
-            error_output = (output_error[i] * deSigmoid(output_summation[i])) / 90;     //calculate error at output neuron
-            output_bias_update += error_output;
-            for (j = 0; j < NUM_LAYER2; j++)
-            {
-                error_layer2[j] = error_output * layer2_weight[j] * deSigmoid(layer2_summation[i][j]);  //calculate error at layer2 neurons
-                layer2_weight_update[j] += error_output * layer2_output[i][j];
-            }
-            for (j = 0; j < NUM_LAYER2; j++)
-            {
-                for (k = 0; k < NUM_LAYER1; k++)
-                {
-                    error_layer1[k] += error_layer2[j] * layer1_weight[j][k] * deSigmoid(layer1_summation[i][k]);   //sum up error linking to neurons in layer1
-                }
-            }
-            for (j = 0; j < NUM_LAYER2; j++)
-            {
-                for (k = 0; k < NUM_LAYER1; k++)
-                {
-                    layer1_bias_update[k] += error_layer1[k];
-                    layer1_weight_update[j][k] += error_layer2[j] * layer1_output[i][k];
-                    for (l = 0; l < NUM_INPUT; l++)
-                    {
-                        input_weight_update[k][l] += error_layer1[k] * trainingInput[i][l];
-                    }
-                    
-                }
-                
-            }
-            for(j = 0; j < NUM_LAYER2; j++)
-            {
-                layer2_bias_update[j] += error_layer2[j];     
-                error_layer2[j] = 0;       
-            }
-            for(j = 0; j < NUM_LAYER1; j++)
-            {
-                layer1_bias_update[j] += error_layer1[j];   
-                error_layer1[j] = 0;
-            }
-        }
-        for (i = 0; i < NUM_LAYER2; i++)
-        {
-            layer2_bias[i] -= LEARNING_RATE * layer2_bias_update[i];
-            layer2_weight[i] -= LEARNING_RATE * layer2_weight_update[i];
-            layer2_bias_update[i] = 0;
-            layer2_weight_update[i] = 0;
-            for (j = 0; j < NUM_LAYER1; j++)
-            {
-                layer1_bias[j] -= LEARNING_RATE * layer1_bias_update[j];
-                layer1_bias_update[j] = 0;
-                layer1_weight_update[i][j] -= LEARNING_RATE * layer1_weight_update[i][j];
-                layer1_weight_update[i][j] = 0;
-                for (k = 0; k < NUM_INPUT; k++)
-                {
-                    input_weight[j][k] -= LEARNING_RATE * input_weight_update[j][k];
-                    input_weight_update[j][k] = 0;
-                }
-            }
-        }
-        output_bias -= LEARNING_RATE * output_bias_update;
-        output_bias_update = 0;
+        //call function to to sum up update parameters
+        backpropagate_summation(trainingInput, layer1_weight, layer2_weight, layer1_output, layer1_summation, layer2_output, layer2_summation, output_error, output_summation, &output_bias_update, layer2_weight_update, layer2_bias_update, layer1_weight_update, layer1_bias_update, input_weight_update);
+
+        //call function to update weight and biases
+        backpropagate_update(input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias, &output_bias_update, layer2_weight_update, layer2_bias_update, layer1_weight_update, layer1_bias_update, input_weight_update);
 
     } while (mae > TARGETED_MAE);
     elapsed = (clock() - start) * 1000 / CLOCKS_PER_SEC;
