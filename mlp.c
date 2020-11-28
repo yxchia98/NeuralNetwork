@@ -11,11 +11,11 @@
 #define SIZE 100         //size of dataset
 #define TRAINSIZE 90
 #define TESTSIZE 10
-#define LEARNING_RATE 0.10
-#define TARGETED_MAE 0.22
+#define LEARNING_RATE 0.69
+#define TARGETED_MAE 0.08
 #define NUM_INPUT 9
-#define NUM_LAYER1 7
-#define NUM_LAYER2 2
+#define NUM_LAYER1 6
+#define NUM_LAYER2 4
 
 /**********************************************************************************************
 Basic elements inside Input arrays(trainingInput/testingInput)          Datatype(range)
@@ -115,21 +115,21 @@ int main()
         m++;
 
         //BACKPROPAGATE PORTION
+        //BACKPROPAGATE PORTION
         for (i = 0; i < TRAINSIZE; i++)
         {
-            error_output = (output_error[i] * deSigmoid(output_summation[i])) / 90;
+            error_output = (output_error[i] * deSigmoid(output_summation[i])) / 90;     //calculate error at output neuron
             output_bias_update += error_output;
             for (j = 0; j < NUM_LAYER2; j++)
             {
-                error_layer2[j] = error_output * layer2_weight[j] * deSigmoid(layer2_summation[i][j]);
-                layer2_bias_update[j] += error_layer2[j];
+                error_layer2[j] = error_output * layer2_weight[j] * deSigmoid(layer2_summation[i][j]);  //calculate error at layer2 neurons
                 layer2_weight_update[j] += error_output * layer2_output[i][j];
             }
             for (j = 0; j < NUM_LAYER2; j++)
             {
                 for (k = 0; k < NUM_LAYER1; k++)
                 {
-                    error_layer1[k] += error_layer2[j] * layer1_weight[j][k] * deSigmoid(layer1_summation[i][k]);
+                    error_layer1[k] += error_layer2[j] * layer1_weight[j][k] * deSigmoid(layer1_summation[i][k]);   //sum up error linking to neurons in layer1
                 }
             }
             for (j = 0; j < NUM_LAYER2; j++)
@@ -142,8 +142,19 @@ int main()
                     {
                         input_weight_update[k][l] += error_layer1[k] * trainingInput[i][l];
                     }
-                    error_layer1[k] = 0;
+                    
                 }
+                
+            }
+            for(j = 0; j < NUM_LAYER2; j++)
+            {
+                layer2_bias_update[j] += error_layer2[j];     
+                error_layer2[j] = 0;       
+            }
+            for(j = 0; j < NUM_LAYER1; j++)
+            {
+                layer1_bias_update[j] += error_layer1[j];   
+                error_layer1[j] = 0;
             }
         }
         for (i = 0; i < NUM_LAYER2; i++)
