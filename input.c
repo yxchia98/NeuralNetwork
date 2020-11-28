@@ -10,7 +10,6 @@ void read_txt(const char *filename, double trainingInput[TRAINSIZE][9], double t
     FILE *ptr;
     ptr=fopen(filename,"r");
     int i=0, k=0;
-    char *token;
     if(ptr==NULL)
     {
         printf("fertility_Diagnosis_Data_Group1_4.txt file not found\n");
