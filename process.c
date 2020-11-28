@@ -5,7 +5,7 @@
 #include <time.h>
 #include "assignment.h"
 
-void feedforward(double trainingInput[][NUM_INPUT], double trainingOutput[TRAINSIZE], double input_weight[][NUM_INPUT], double layer1_weight[][NUM_LAYER1], double layer2_weight[NUM_LAYER2], double layer1_bias[NUM_LAYER1], double layer2_bias[NUM_LAYER2], double *output_bias, double layer1_output[][NUM_LAYER1], double layer1_summation[][NUM_LAYER1], double layer2_output[][NUM_LAYER2], double layer2_summation[][NUM_LAYER2], double output_error[TRAINSIZE], double output_summation[TRAINSIZE], , double output[TRAINSIZE], double *sumAbsError, double *sumErrorSq, double *layer1Sum, double *layer2Sum, double *outputSum, double *current_error)
+void feedforward(double trainingInput[][NUM_INPUT], double trainingOutput[TRAINSIZE], double input_weight[][NUM_INPUT], double layer1_weight[][NUM_LAYER1], double layer2_weight[NUM_LAYER2], double layer1_bias[NUM_LAYER1], double layer2_bias[NUM_LAYER2], double *output_bias, double layer1_output[][NUM_LAYER1], double layer1_summation[][NUM_LAYER1], double layer2_output[][NUM_LAYER2], double layer2_summation[][NUM_LAYER2], double output_error[TRAINSIZE], double output_summation[TRAINSIZE], double output[TRAINSIZE], double *sumAbsError, double *sumErrorSq, double *layer1Sum, double *layer2Sum, double *outputSum, double *current_error)
 {
     int i,j,k,l;
     //FEEDFORAWRD PORTION
