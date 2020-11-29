@@ -4,11 +4,11 @@
 #include <string.h>
 #include <time.h>
 #include "assignment.h"
-#include "input.c"
-#include "process.c"
-#include "confusionMatrix.c"
-#include "trainWeights.c"
-#include "testWeights.c"
+// #include "input.c"
+// #include "process.c"
+// #include "confusionMatrix.c"
+// #include "trainWeights.c"
+// #include "testWeights.c"
 
 /**********************************************************************************************
 Basic elements inside Input arrays(trainingInput/testingInput)          Datatype(range)
@@ -37,23 +37,7 @@ int main()
     FILE *plotptr;
     // double sumAbsError, sumErrorSq, mae, mmse, untrained_mae, untrained_mmse, layer1Sum, layer2Sum, outputSum, current_error;
     int i, j, k, l, n, tp, fp, fn, tn;
-    int confusionCount[4][4];
-    confusionCount[0][0] = 0;
-    confusionCount[0][1] = 0;
-    confusionCount[0][2] = 0;
-    confusionCount[0][3] = 0;
-    confusionCount[1][0] = 0;
-    confusionCount[1][1] = 0;
-    confusionCount[1][2] = 0;
-    confusionCount[1][3] = 0;
-    confusionCount[2][0] = 0;
-    confusionCount[2][1] = 0;
-    confusionCount[2][2] = 0;
-    confusionCount[2][3] = 0;
-    confusionCount[3][0] = 0;
-    confusionCount[3][1] = 0;
-    confusionCount[3][2] = 0;
-    confusionCount[3][3] = 0;
+    int confusionCount[4][4] = {};
     //1 = training set before training, 2 = testing set before training, 3 = training set after training, 4 = testing set after training
     double mmse_arr[4];
     //1 = TP, 2 = FP, 3 = TN, 4 = FN

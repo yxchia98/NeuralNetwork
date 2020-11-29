@@ -8,11 +8,11 @@
 #define SIZE 100         //size of dataset
 #define TRAINSIZE 90
 #define TESTSIZE 10
-#define LEARNING_RATE 0.69
-#define TARGETED_MAE 0.15
+#define LEARNING_RATE 0.40
+#define TARGETED_MAE 0.10
 #define NUM_INPUT 9
-#define NUM_LAYER1 8
-#define NUM_LAYER2 4
+#define NUM_LAYER1 10
+#define NUM_LAYER2 5
 
 void read_txt(const char *filename, double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE]);
 void randWeight(double x[], int n);
