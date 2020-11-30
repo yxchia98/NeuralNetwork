@@ -38,7 +38,7 @@ int main()
     static double layer1_bias[NUM_LAYER1], layer2_bias[NUM_LAYER2], output_bias;
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
     FILE *plotptr; //file pointer for plotting of graph
-    FILE *gnuplotPipe;
+    FILE *gnuplotPipe; //to be used to access gnuplot
     int i, j, k, l, n, tp, fp, fn, tn;
     //4 different confusion matrix
     //1 = training set before training, 2 = testing set before training, 3 = training set after training, 4 = testing set after training
