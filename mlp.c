@@ -38,7 +38,7 @@ int main()
     static double layer1_bias[NUM_LAYER1], layer2_bias[NUM_LAYER2], output_bias;
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
     FILE *plotptr; //file pointer for plotting of graph
-    FILE *gnuplotPipe = _popen("C:\\\"Program Files\"\\gnuplot\\bin\\gnuplot -persistent", "w"); //points to where GNUPLOT is in program files
+    FILE *gnuplotPipe;
     int i, j, k, l, n, tp, fp, fn, tn;
     //4 different confusion matrix
     //1 = training set before training, 2 = testing set before training, 3 = training set after training, 4 = testing set after training
@@ -61,12 +61,11 @@ int main()
     randWeight(layer2_bias, NUM_LAYER2);
     output_bias = randFrom(-1, 1);
 
-    //Open MAEGraph.txt, the file used to store the MAE for every iteration
-    if ((plotptr = fopen("MAEGraph.txt", "w")) == NULL)
-    {
-        printf("\nMAEGraph.txt does not exist.");
-        exit(1);
-    }
+    //Error checking for FILE pointers
+    if ((plotptr = fopen("MAEGraph.txt", "w")) == NULL) //creates MAEGraph.txt file to store MAE for each iteration
+    printf("\nMAEGraph.txt does not exist.");
+    if(( gnuplotPipe = _popen("C:\\\"Program Files\"\\gnuplot\\bin\\gnuplot -persistent", "w")) == NULL) //opens a pipe to the gnuplot application
+    printf("\nGnuplot not found");
     //confusion matrix of testing set, untrained weights
     //TESTING SET
     testWeights(TESTSIZE, confusionCount[1], &mmse_arr[1], &mae_arr[1], testingInput, testingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias);
@@ -86,9 +85,8 @@ int main()
     elapsed = (clock() - start) * 1000 / CLOCKS_PER_SEC; //get difference between current time and start time, in ms
     secs = elapsed / 1000.0;                             //convert into seconds
     printf("\nTime taken: %.2fseconds(%dms)\n\n", secs, elapsed);
-    fprintf(gnuplotPipe, "%s \n", "plot 'MAEGraph.txt' with lines linecolor 'red' title 'MAE'");
+    fprintf(gnuplotPipe, "%s \n", "plot 'MAEGraph.txt' with lines linecolor 'red' title 'MAE'"); //command to plot out graph
     _pclose(gnuplotPipe);
     remove("MAEGraph.txt");
-    // system("gnuplot -p plotcmd.txt");
     return 0;
 }
