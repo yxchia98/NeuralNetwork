@@ -13,6 +13,11 @@
 #define NUM_INPUT 9
 #define NUM_LAYER1 10
 #define NUM_LAYER2 5
+#define BOLDBLACK "\033[1m\033[30m" //bold black printing color
+#define BOLDGREEN "\033[1m\033[32m" //bold green printing color
+#define BOLDRED "\033[1m\033[31m"   //bold red printing color
+#define RESET "\033[0m"             //reset printing color
+
 // definition of NUM_LAYER1 and NUM_LAYER2 can be changed to adjust the neurons in respective layers
 void read_txt(const char *filename, double trainingInput[TRAINSIZE][9], double trainingOutput[TRAINSIZE], double testingInput[TESTSIZE][9], double testingOutput[TESTSIZE]);
 void randWeight(double x[], int n);
@@ -24,6 +29,6 @@ void backpropagate_update(double input_weight[][NUM_INPUT], double layer1_weight
 double sigmoid(double x);
 double deSigmoid(double x);
 void confusionMatrix(int confusionCount[4], float predictedY, int output);
-void printConfusionMatrix(int confusionCount[4][4], double MMSE[4]);
-void trainWeights(double *mmse_arr, int confusionCount[4], FILE *plotptr, double trainingInput[TRAINSIZE][NUM_INPUT], double trainingOutput[TRAINSIZE], double input_weight[NUM_LAYER1][NUM_INPUT], double layer1_weight[NUM_LAYER2][NUM_LAYER1], double layer2_weight[NUM_LAYER2], double layer1_bias[NUM_LAYER1], double layer2_bias[NUM_LAYER2], double *output_bias);
-void testWeights(int size, int confusionCount[4], double *mmse_ptr, double input_arr[][NUM_INPUT], double *output_arr, double input_weight[NUM_LAYER1][NUM_INPUT], double layer1_weight[NUM_LAYER2][NUM_LAYER1], double layer2_weight[NUM_LAYER2], double layer1_bias[NUM_LAYER1], double layer2_bias[NUM_LAYER2], double *output_bias);
+void printConfusionMatrix(int confusionCount[4][4], double mmse[4], double mae[4]);
+void trainWeights(double *mmse_arr, double *mae_arr, int confusionCount[4], FILE *plotptr, double trainingInput[TRAINSIZE][NUM_INPUT], double trainingOutput[TRAINSIZE], double input_weight[NUM_LAYER1][NUM_INPUT], double layer1_weight[NUM_LAYER2][NUM_LAYER1], double layer2_weight[NUM_LAYER2], double layer1_bias[NUM_LAYER1], double layer2_bias[NUM_LAYER2], double *output_bias);
+void testWeights(int size, int confusionCount[4], double *mmse_ptr, double *mae_ptr, double input_arr[][NUM_INPUT], double *output_arr, double input_weight[NUM_LAYER1][NUM_INPUT], double layer1_weight[NUM_LAYER2][NUM_LAYER1], double layer2_weight[NUM_LAYER2], double layer1_bias[NUM_LAYER1], double layer2_bias[NUM_LAYER2], double *output_bias);

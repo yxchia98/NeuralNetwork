@@ -30,19 +30,20 @@ Basic elements inside Output arrays(trainingOutput/testingOutput)       Datatype
 
 int main()
 {
+    clock_t start, elapsed;
+    float secs;
+    start = clock(); //capture current clock
     static double trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE];
     static double input_weight[NUM_LAYER1][NUM_INPUT], layer1_weight[NUM_LAYER2][NUM_LAYER1], layer2_weight[NUM_LAYER2];
     static double layer1_bias[NUM_LAYER1], layer2_bias[NUM_LAYER2], output_bias;
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
     FILE *plotptr; //file pointer for plotting of graph
     int i, j, k, l, n, tp, fp, fn, tn;
-    int confusionCount[4][4] = {};
+    //4 different confusion matrix
     //1 = training set before training, 2 = testing set before training, 3 = training set after training, 4 = testing set after training
-    double mmse_arr[4];
-    //1 = TP, 2 = FP, 3 = TN, 4 = FN
-    double predictedY;
-    //used in confusion matrix
-    double output_untrained_arr[90];
+    int confusionCount[4][4] = {};
+    //mmse of the 4 confusion matrix
+    double mmse_arr[4], mae_arr[4]; //1 = TP, 2 = FP, 3 = TN, 4 = FN
 
     read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
     //randomize weights below
@@ -60,26 +61,30 @@ int main()
     output_bias = randFrom(-1, 1);
 
     //Open MAEGraph.txt, the file used to store the MAE for every iteration
-    if ((plotptr = fopen("MAEGraph.txt", "w")) == NULL) 
+    if ((plotptr = fopen("MAEGraph.txt", "w")) == NULL)
     {
         printf("\nMAEGraph.txt does not exist.");
         exit(1);
     }
     //confusion matrix of testing set, untrained weights
     //TESTING SET
-    testWeights(TESTSIZE, confusionCount[1], &mmse_arr[1], testingInput, testingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias);
+    testWeights(TESTSIZE, confusionCount[1], &mmse_arr[1], &mae_arr[1], testingInput, testingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias);
 
     //train the weights
-    trainWeights(&mmse_arr[0], confusionCount[0], plotptr, trainingInput, trainingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias);
+    trainWeights(&mmse_arr[0], &mae_arr[0], confusionCount[0], plotptr, trainingInput, trainingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias);
 
     //confusion matrix of testing set, trained weights
-    testWeights(TESTSIZE, confusionCount[3], &mmse_arr[3], testingInput, testingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias);
+    testWeights(TESTSIZE, confusionCount[3], &mmse_arr[3], &mae_arr[3], testingInput, testingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias);
 
     //confusion matrix of training set, trained weights
-    testWeights(TRAINSIZE, confusionCount[2], &mmse_arr[2], trainingInput, trainingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias);
+    testWeights(TRAINSIZE, confusionCount[2], &mmse_arr[2], &mae_arr[2], trainingInput, trainingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, &output_bias);
 
-    printConfusionMatrix(confusionCount, mmse_arr);
+    //printing of confusion matrix
+    printConfusionMatrix(confusionCount, mmse_arr, mae_arr);
     fclose(plotptr);
+    elapsed = (clock() - start) * 1000 / CLOCKS_PER_SEC; //get difference between current time and start time, in ms
+    secs = elapsed / 1000.0;
+    printf("\nTime taken: %.2fseconds(%dms)\n\n", secs, elapsed);
     system("gnuplot -p plotcmd.txt");
     return 0;
 }
