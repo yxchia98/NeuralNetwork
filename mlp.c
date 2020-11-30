@@ -38,7 +38,7 @@ int main()
     static double layer1_bias[NUM_LAYER1], layer2_bias[NUM_LAYER2], output_bias;
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
     FILE *plotptr; //file pointer for plotting of graph
-    FILE *gnuplotPipe = _popen ("gnuplot -persistent", "w");
+    FILE *gnuplotPipe = _popen("C:\\\"Program Files\"\\gnuplot\\bin\\gnuplot -persistent", "w"); //points to where GNUPLOT is in program files
     int i, j, k, l, n, tp, fp, fn, tn;
     //4 different confusion matrix
     //1 = training set before training, 2 = testing set before training, 3 = training set after training, 4 = testing set after training
@@ -84,7 +84,7 @@ int main()
     printConfusionMatrix(confusionCount, mmse_arr, mae_arr);
     fclose(plotptr);
     elapsed = (clock() - start) * 1000 / CLOCKS_PER_SEC; //get difference between current time and start time, in ms
-    secs = elapsed / 1000.0;
+    secs = elapsed / 1000.0;                             //convert into seconds
     printf("\nTime taken: %.2fseconds(%dms)\n\n", secs, elapsed);
     fprintf(gnuplotPipe, "%s \n", "plot 'MAEGraph.txt' with lines linecolor 'red' title 'MAE'");
     _pclose(gnuplotPipe);

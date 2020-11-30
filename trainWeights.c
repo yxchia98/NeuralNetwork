@@ -44,7 +44,6 @@ void trainWeights(double *mmse_arr, double *mae_arr, int confusionCount[4], FILE
             backpropagate_update(input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, output_bias, &output_bias_update, layer2_weight_update, layer2_bias_update, layer1_weight_update, layer1_bias_update, input_weight_update);
         }
     } while (mae > TARGETED_MAE);
-    //convert into seconds
     printf("\n\nTotal Number of iterations: %d", num_iteration);
 
     printf(BOLDRED "\n\nUntrained" RESET);
