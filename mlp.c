@@ -11,31 +11,30 @@
 // #include "testWeights.c"
 
 /**********************************************************************************************
-Basic elements inside Input arrays(trainingInput/testingInput)          Datatype(range)
-[0]=Season of analysis                                                  Double(-1,-0.33,0.33,1)
-[1]=Age of analysis                                                     Double(0-1)
-[2]=Childish disease                                                    Int(0,1)
-[3]=Accident or serious trauma                                          Int(0,1)
-[4]=Surgical intervention                                               Int(0,1)
-[5]=High fevers last year                                               Int(-1,0,1)
-[6]=Frequency of alcohol consumption                                    Double(0.2,0.4,0.6,0.8,1)
-[7]=Smoking habit                                                       Int(-1,0,1)
-[8]=Number of hours spent sitting per day                               Double(0-1)
+Basic elements inside Input arrays(trainingInput/testingInput)          
+[0]=Season of analysis                                                  
+[1]=Age of analysis                                                     
+[2]=Childish disease                                                    
+[3]=Accident or serious trauma                                          
+[4]=Surgical intervention                                               
+[5]=High fevers last year                                               
+[6]=Frequency of alcohol consumption                                    
+[7]=Smoking habit                                                       
+[8]=Number of hours spent sitting per day                               
 --------------------------------------------------------------------------------------------------
 Basic elements inside Output arrays(trainingOutput/testingOutput)       Datatype(range)
 [0]=Semen Diagnosis                                                     Int(0,1)
 ***********************************************************************************************/
+
+/************************************MULTI-LAYER PERCEPTRON(2 HIDDEN LAYERS, 10 IN LAYER1, 5 IN LAYER 2)***************************************/
 
 int main()
 {
     static double trainingInput[TRAINSIZE][NUM_INPUT], trainingOutput[TRAINSIZE], testingInput[TESTSIZE][NUM_INPUT], testingOutput[TESTSIZE];
     static double input_weight[NUM_LAYER1][NUM_INPUT], layer1_weight[NUM_LAYER2][NUM_LAYER1], layer2_weight[NUM_LAYER2];
     static double layer1_bias[NUM_LAYER1], layer2_bias[NUM_LAYER2], output_bias;
-    // static double layer1_output[TRAINSIZE][NUM_LAYER1], layer1_summation[TRAINSIZE][NUM_LAYER1], layer2_output[TRAINSIZE][NUM_LAYER2], layer2_summation[TRAINSIZE][NUM_LAYER2], output_error[TRAINSIZE], output_summation[TRAINSIZE], output[TRAINSIZE];
-    // static double output_bias_update, layer2_weight_update[NUM_LAYER2], layer2_bias_update[NUM_LAYER2], layer1_weight_update[NUM_LAYER2][NUM_LAYER1], layer1_bias_update[NUM_LAYER1], input_weight_update[NUM_LAYER1][NUM_INPUT];
     char *filename = "fertility_Diagnosis_Data_Group1_4.txt";
-    FILE *plotptr;
-    // double sumAbsError, sumErrorSq, mae, mmse, untrained_mae, untrained_mmse, layer1Sum, layer2Sum, outputSum, current_error;
+    FILE *plotptr; //file pointer for plotting of graph
     int i, j, k, l, n, tp, fp, fn, tn;
     int confusionCount[4][4] = {};
     //1 = training set before training, 2 = testing set before training, 3 = training set after training, 4 = testing set after training
@@ -46,6 +45,7 @@ int main()
     double output_untrained_arr[90];
 
     read_txt(filename, trainingInput, trainingOutput, testingInput, testingOutput); // reads txt file and assigns it into txt_array
+    //randomize weights below
     for (i = 0; i < NUM_LAYER1; i++)
     {
         randWeight(input_weight[i], NUM_INPUT);
@@ -59,7 +59,8 @@ int main()
     randWeight(layer2_bias, NUM_LAYER2);
     output_bias = randFrom(-1, 1);
 
-    if ((plotptr = fopen("MAEGraph.txt", "w")) == NULL)
+    //Open MAEGraph.txt, the file used to store the MAE for every iteration
+    if ((plotptr = fopen("MAEGraph.txt", "w")) == NULL) 
     {
         printf("\nMAEGraph.txt does not exist.");
         exit(1);

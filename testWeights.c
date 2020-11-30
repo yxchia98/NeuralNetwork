@@ -15,25 +15,25 @@ void testWeights(int size, int confusionCount[4], double *mmse_ptr, double input
             {
                 for (int l = 0; l < NUM_INPUT; l++) //input layer
                 {
-                    layer1Sum += input_arr[i][l] * input_weight[k][l];
+                    layer1Sum += input_arr[i][l] * input_weight[k][l];  //regression for input layer
                 }
-                layer1Sum += layer1_bias[k];
-                layer1_summation[i][k] = layer1Sum;
-                layer1_output[i][k] = sigmoid(layer1Sum);
-                layer1Sum = 0;
+                layer1Sum += layer1_bias[k];            //add bias after weight*input portion
+                layer1_summation[i][k] = layer1Sum;     //store summation to be used for backpropagation later
+                layer1_output[i][k] = sigmoid(layer1Sum);   //store output
+                layer1Sum = 0;                          //reset sum for next row of data
 
-                layer2Sum += layer1_output[i][k] * layer1_weight[j][k];
+                layer2Sum += layer1_output[i][k] * layer1_weight[j][k]; //regression for second layer
             }
-            layer2Sum += layer2_bias[j];
-            layer2_summation[i][j] = layer2Sum;
-            layer2_output[i][j] = sigmoid(layer2Sum);
-            layer2Sum = 0;
+            layer2Sum += layer2_bias[j];                //adding bais to finalize regression
+            layer2_summation[i][j] = layer2Sum;         //store layer2 summation
+            layer2_output[i][j] = sigmoid(layer2Sum);   //store layer2 output
+            layer2Sum = 0;                  //reset for next row of data
 
-            outputSum += layer2_output[i][j] * layer2_weight[j];
+            outputSum += layer2_output[i][j] * layer2_weight[j];    //regression for output neuron
         }
-        outputSum += *output_bias;
+        outputSum += *output_bias;      //adding bias to finalize regression
         double predictedY = sigmoid(outputSum);
-        confusionMatrix(confusionCount, predictedY, output_arr[i]);
+        confusionMatrix(confusionCount, predictedY, output_arr[i]); //pass in predicted output for confusion matrix
         sumErrorSq += pow(predictedY - output_arr[i], 2);
         /**************************************************************************************/
         outputSum = 0;
