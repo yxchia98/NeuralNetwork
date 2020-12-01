@@ -16,9 +16,9 @@ void trainWeights(double *mmse_arr, double *mae_arr, int confusionCount[4], FILE
             //feed forward for first iteration
             //to get confusion matrix for training set, untrained weights
             feedforward_first_iteration(confusionCount, trainingInput, trainingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, output_bias, layer1_output, layer1_summation, layer2_output, layer2_summation, output_error, output_summation, &sumAbsError, &sumErrorSq, &layer1Sum, &layer2Sum, &outputSum, &current_error);
-            mae = sumAbsError / 90; //get mean absolute error from sum of absolute errors
-            mmse = sumErrorSq / 90; //get mean square error from sum of square errors
-            untrained_mmse = mmse;  //capture untrained mmse and mae
+            mae = sumAbsError / TRAINSIZE; //get mean absolute error from sum of absolute errors
+            mmse = sumErrorSq / TRAINSIZE; //get mean square error from sum of square errors
+            untrained_mmse = mmse;         //capture untrained mmse and mae
             untrained_mae = mae;
             *mmse_arr = untrained_mmse; //store untrained mmse and mae for printing
             *mae_arr = untrained_mae;
@@ -27,8 +27,8 @@ void trainWeights(double *mmse_arr, double *mae_arr, int confusionCount[4], FILE
         {
             //call feedforward function
             feedforward(trainingInput, trainingOutput, input_weight, layer1_weight, layer2_weight, layer1_bias, layer2_bias, output_bias, layer1_output, layer1_summation, layer2_output, layer2_summation, output_error, output_summation, &sumAbsError, &sumErrorSq, &layer1Sum, &layer2Sum, &outputSum, &current_error);
-            mae = sumAbsError / 90; //get mean absolute error from sum of absolute errors
-            mmse = sumErrorSq / 90; //get mean square error from sum of square errors
+            mae = sumAbsError / TRAINSIZE; //get mean absolute error from sum of absolute errors
+            mmse = sumErrorSq / TRAINSIZE; //get mean square error from sum of square errors
         }
         // printf("\nIteration %d, MAE is: %lf, MMSE is: %lf", num_iteration, mae, mmse);
         fprintf(plotptr, "%lf\n", mae); //write MAE of every iteration into a txt file
