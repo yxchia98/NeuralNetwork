@@ -7,6 +7,7 @@ void trainWeights(double *mmse_arr, double *mae_arr, int confusionCount[4], FILE
     static double output_bias_update, layer2_weight_update[NUM_LAYER2], layer2_bias_update[NUM_LAYER2], layer1_weight_update[NUM_LAYER2][NUM_LAYER1], layer1_bias_update[NUM_LAYER1], input_weight_update[NUM_LAYER1][NUM_INPUT];
     double sumAbsError, sumErrorSq, mae, mmse, untrained_mae, untrained_mmse, layer1Sum, layer2Sum, outputSum, current_error;
     int num_iteration;
+    printf("training...");
     num_iteration = 1;
     do
     {
@@ -29,8 +30,7 @@ void trainWeights(double *mmse_arr, double *mae_arr, int confusionCount[4], FILE
             mae = sumAbsError / 90; //get mean absolute error from sum of absolute errors
             mmse = sumErrorSq / 90; //get mean square error from sum of square errors
         }
-        printf("\nIteration %d, MAE is: %lf, MMSE is: %lf", num_iteration, mae, mmse);
-        //Yi Xuan, help me check the plotting
+        // printf("\nIteration %d, MAE is: %lf, MMSE is: %lf", num_iteration, mae, mmse);
         fprintf(plotptr, "%lf\n", mae); //write MAE of every iteration into a txt file
         sumErrorSq = 0;
         sumAbsError = 0;

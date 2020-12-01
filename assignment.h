@@ -8,11 +8,11 @@
 #define SIZE 100         //size of dataset
 #define TRAINSIZE 90
 #define TESTSIZE 10
-#define LEARNING_RATE 0.40
-#define TARGETED_MAE 0.15
+#define LEARNING_RATE 0.60
+#define TARGETED_MAE 0.07
 #define NUM_INPUT 9
-#define NUM_LAYER1 10
-#define NUM_LAYER2 5
+#define NUM_LAYER1 6
+#define NUM_LAYER2 3
 #define BOLDBLACK "\033[1m\033[30m" //bold black printing color
 #define BOLDGREEN "\033[1m\033[32m" //bold green printing color
 #define BOLDRED "\033[1m\033[31m"   //bold red printing color

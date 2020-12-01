@@ -1,1 +1,0 @@
-plot 'MAEGraph.txt' with lines linecolor 'red' title 'MAE'

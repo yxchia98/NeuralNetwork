@@ -119,16 +119,16 @@ void backpropagate_summation(double trainingInput[][NUM_INPUT], double layer1_we
             {
                 layer1_weight_update[j][k] += error_layer2[j] * layer1_output[i][k];    //summation of layer 1 update, by differenciating layer 2 neuron and layer1 neuron output
                 error_layer2[j] = 0;            //reset for next batch
-                for (l = 0; l < NUM_INPUT; l++)
-                {
-                    input_weight_update[k][l] += error_layer1[k] * trainingInput[i][l]; //summation of input weight update, using  the sum of error till layer 1, differenciate with input parameter to get weight update for input
-                }
             }
         }
-        for (j = 0; j < NUM_LAYER1; j++)
+        for (k = 0; k < NUM_LAYER1; k++)
         {
-            layer1_bias_update[j] += error_layer1[j];       //summation of bias update for layer 1 neurons
-            error_layer1[j] = 0;                            //reset for next batch
+            for (l = 0; l < NUM_INPUT; l++)
+            {
+                input_weight_update[k][l] += error_layer1[k] * trainingInput[i][l]; //summation of input weight update, using  the sum of error till layer 1, differenciate with input parameter to get weight update for input
+            }
+            layer1_bias_update[k] += error_layer1[k];       //summation of bias update for layer 1 neurons
+            error_layer1[k] = 0;                            //reset for next batch
         }
     }
 }
