@@ -9,7 +9,7 @@
 #define TRAINSIZE 90
 #define TESTSIZE 10
 #define LEARNING_RATE 0.60
-#define TARGETED_MAE 0.07
+#define TARGETED_MAE 0.08
 #define NUM_INPUT 9
 #define NUM_LAYER1 6
 #define NUM_LAYER2 3
